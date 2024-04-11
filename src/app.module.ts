@@ -13,7 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       envFilePath: '.env',
     }),
     MongooseModule.forRoot(
-      'mongodb://amanec3644:5AbpNaXSt148Niut@phandal.knc6eah.mongodb.net/Phandal?authSource=admin',
+      'mongodb://amanec3644:5AbpNaXSt148Niut@phandal.knc6eah.mongodb.net:3000/Phandal?authSource=admin',
     ),
     AuthModule,
     UserModule,
