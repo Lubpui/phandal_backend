@@ -12,11 +12,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    MongooseModule.forRoot('mongodb+srv://phandal.knc6eah.mongodb.net', {
-      user: 'amanec3644',
-      pass: '5AbpNaXSt148Niut',
-      dbName: 'Phandal',
-    }),
+    MongooseModule.forRoot(process.env.DB_URL),
     AuthModule,
     UserModule,
   ],
