@@ -49,4 +49,15 @@ export class UserService {
       .populate('summaryScore');
     return user;
   }
+
+  async findAllUsers(): Promise<UserDocument[]> {
+    const users = await this.userModel
+      .find()
+      .populate({
+        path: 'devices',
+        populate: { path: 'configulations' },
+      })
+      .populate('summaryScore');
+    return users;
+  }
 }

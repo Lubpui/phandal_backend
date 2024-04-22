@@ -8,6 +8,9 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User {
+  @Prop()
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ required: true, unique: true })
   username: string;
 

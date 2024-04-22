@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { HistoryModule } from './history/history.module';
 import { DevicesModule } from './devices/devices.module';
+import { TeamModule } from './team/team.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { DevicesModule } from './devices/devices.module';
     UserModule,
     HistoryModule,
     DevicesModule,
+    TeamModule,
   ],
   controllers: [AppController],
   providers: [AppService],

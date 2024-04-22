@@ -13,6 +13,11 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('/profile')
+  findAll() {
+    return this.userService.findAllUsers();
+  }
+  @UseGuards(JwtAuthGuard)
   @Get('/profile/:id')
   findOne(@Param('id') id: string) {
     return this.userService.findUserById(id);
