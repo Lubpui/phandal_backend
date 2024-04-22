@@ -2,16 +2,32 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
-import { RegisterDto } from './dto/register.dto';
+import { RegisterDto, SummaryScoreDto } from './dto/register.dto';
+import { SummaryScore } from './schemas/summaryScore.schema';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(SummaryScore.name)
+    private readonly summaryScoreModel: Model<SummaryScore>,
   ) {}
 
   async createUser(registerDto: RegisterDto): Promise<User> {
-    const newUser = new this.userModel(registerDto);
+    const newSummaryScore = new this.summaryScoreModel<SummaryScoreDto>({
+      killed: 0,
+      death: 0,
+      short: 0,
+      winCount: 0,
+      loseCount: 0,
+    });
+    const saveSummaryScore = await newSummaryScore.save();
+
+    const newUser = new this.userModel({
+      summaryScore: saveSummaryScore.id,
+      ...registerDto,
+    });
+
     return newUser.save();
   }
 
@@ -21,5 +37,16 @@ export class UserService {
 
   async findUserByUsername(username: string): Promise<UserDocument> {
     return await this.userModel.findOne({ username }).exec();
+  }
+
+  async findUserById(id: string): Promise<UserDocument> {
+    const user = await this.userModel
+      .findById(id, { password: 0 })
+      .populate({
+        path: 'devices',
+        populate: { path: 'configulations' },
+      })
+      .populate('summaryScore');
+    return user;
   }
 }

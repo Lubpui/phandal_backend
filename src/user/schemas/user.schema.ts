@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import { Device } from 'src/devices/schemas/device.schema';
+import { SummaryScore } from './summaryScore.schema';
 
 export type UserDocument = User & Document;
 
@@ -15,8 +17,17 @@ export class User {
   @Prop({ required: true })
   birthdate: string;
 
-  @Prop({ required: true })
+  @Prop()
   password: string;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Device' }] })
+  devices: Device[];
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'SummaryScore',
+  })
+  summaryScore: SummaryScore;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
