@@ -4,17 +4,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Device } from './schemas/device.schema';
 import { Model } from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
-import { Configulation } from './schemas/configulation.schema';
-import { ConfigulationDto } from './dto/device.dto';
-// import { UpdateDeviceDto } from './dto/update-device.dto';
+import { Configuration } from './schemas/configuration.schema';
+import { ConfigurationDto } from './dto/device.dto';
 
 @Injectable()
 export class DevicesService {
   constructor(
     @InjectModel(Device.name) private deviceModel: Model<Device>,
     @InjectModel(User.name) private userModel: Model<User>,
-    @InjectModel(Configulation.name)
-    private configulationModel: Model<Configulation>,
+    @InjectModel(Configuration.name)
+    private configurationModel: Model<Configuration>,
   ) {}
 
   async createDevice({ userId, ...createDeviceDto }: CreateDeviceDto) {
@@ -22,15 +21,15 @@ export class DevicesService {
 
     if (!findUser) throw new HttpException('User not found', 404);
 
-    const newConfigulation = new this.configulationModel<ConfigulationDto>({
+    const newConfiguration = new this.configurationModel<ConfigurationDto>({
       lightColor: 'red',
       recoil: 1,
       mode: 'demi',
     });
-    const saveConfigulation = await newConfigulation.save();
+    const saveConfiguration = await newConfiguration.save();
 
     const newDevice = new this.deviceModel({
-      configulations: saveConfigulation.id,
+      configurations: saveConfiguration.id,
       ...createDeviceDto,
     });
     const saveDevice = await newDevice.save();
@@ -44,19 +43,24 @@ export class DevicesService {
     return saveDevice;
   }
 
-  // findAll() {
-  //   return `This action returns all devices`;
-  // }
+  async updateDeviceConfiguration(
+    deviceId: string,
+    configuration: ConfigurationDto,
+  ) {
+    console.log(configuration);
+    const device = await this.deviceModel.findById(deviceId);
+    if (!device) throw new HttpException('Device not found', 404);
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} device`;
-  // }
+    console.log(device._id);
+    const deviceConfiguration = await this.configurationModel.findById(
+      device.configurations,
+    );
+    if (!deviceConfiguration)
+      throw new HttpException('Device Configuration not found', 404);
 
-  // update(id: number, updateDeviceDto: UpdateDeviceDto) {
-  //   return `This action updates a #${id} device`;
-  // }
+    const updatedDeviceConfiguration =
+      await deviceConfiguration.updateOne(configuration);
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} device`;
-  // }
+    return updatedDeviceConfiguration;
+  }
 }

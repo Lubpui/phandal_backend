@@ -40,14 +40,14 @@ export class HistoryService {
           pipeline: [
             {
               $lookup: {
-                from: 'configulations',
-                localField: 'configulations',
+                from: 'configurations',
+                localField: 'configurations',
                 foreignField: '_id',
-                as: 'configulations',
+                as: 'configurations',
               },
             },
             {
-              $unwind: '$configulations',
+              $unwind: '$configurations',
             },
           ],
         },

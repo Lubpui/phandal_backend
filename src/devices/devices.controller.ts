@@ -1,17 +1,9 @@
-import {
-  Controller,
-  // Get,
-  Post,
-  Body,
-  // Patch,
-  // Param,
-  // Delete,
-} from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
 import { DevicesService } from './devices.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
-// import { UpdateDeviceDto } from './dto/update-device.dto';
+import { ConfigurationDto } from './dto/device.dto';
 
-@Controller('devices')
+@Controller('device')
 export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
@@ -20,23 +12,14 @@ export class DevicesController {
     return this.devicesService.createDevice(createDeviceDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.devicesService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.devicesService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateDeviceDto: UpdateDeviceDto) {
-  //   return this.devicesService.update(+id, updateDeviceDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.devicesService.remove(+id);
-  // }
+  @Patch('/configuration/update/:id')
+  update(
+    @Param('id') id: string,
+    @Body() deviceConfiguration: ConfigurationDto,
+  ) {
+    return this.devicesService.updateDeviceConfiguration(
+      id,
+      deviceConfiguration,
+    );
+  }
 }

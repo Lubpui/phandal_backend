@@ -4,16 +4,16 @@ import { DevicesController } from './devices.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Device, DeviceSchema } from './schemas/device.schema';
 import {
-  Configulation,
-  ConfigulationSchema,
-} from './schemas/configulation.schema';
+  Configuration,
+  ConfigurationSchema,
+} from './schemas/configuration.schema';
 import { User, UserSchema } from 'src/user/schemas/user.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Device.name, schema: DeviceSchema },
-      { name: Configulation.name, schema: ConfigulationSchema },
+      { name: Configuration.name, schema: ConfigurationSchema },
       { name: User.name, schema: UserSchema },
     ]),
   ],

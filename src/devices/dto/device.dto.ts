@@ -1,4 +1,4 @@
-export class ConfigulationDto {
+export class ConfigurationDto {
   readonly lightColor: string;
   readonly recoil: number;
   readonly mode: string;
@@ -7,5 +7,5 @@ export class ConfigulationDto {
 export class DeviceDto {
   readonly name: string;
   readonly address: string;
-  readonly configulations: ConfigulationDto;
+  readonly configurations: ConfigurationDto;
 }

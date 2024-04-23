@@ -1,10 +1,11 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { CreateTeamDto, ScoreDto } from './dto/create-team.dto';
+import { CreateTeamDto } from './dto/create-team.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Team } from './schemas/team.schema';
 import { Model } from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
 import { Score } from './schemas/score.schema';
+import { ScoreDto } from './dto/team.dto';
 
 @Injectable()
 export class TeamService {

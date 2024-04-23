@@ -46,7 +46,7 @@ export class UserService {
       .findById(id, { password: 0 })
       .populate({
         path: 'devices',
-        populate: { path: 'configulations' },
+        populate: { path: 'configurations' },
       })
       .populate('summaryScore');
     return user;
@@ -57,7 +57,7 @@ export class UserService {
       .find()
       .populate({
         path: 'devices',
-        populate: { path: 'configulations' },
+        populate: { path: 'configurations' },
       })
       .populate('summaryScore');
     return users;
@@ -95,6 +95,6 @@ export class UserService {
 
     const updateSummaryScore = await summaryScore.updateOne(newSummaryScore);
 
-    console.log(updateSummaryScore);
+    return updateSummaryScore;
   }
 }

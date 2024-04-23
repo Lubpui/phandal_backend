@@ -1,8 +1,5 @@
-export class ScoreDto {
-  readonly killed: number;
-  readonly death: number;
-  readonly short: number;
-}
+import { ScoreDto } from './team.dto';
+
 export class CreateTeamDto {
   readonly userId: string;
   readonly score: ScoreDto;
