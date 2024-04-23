@@ -1,10 +1,11 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { ConfigulationDto, CreateDeviceDto } from './dto/create-device.dto';
+import { CreateDeviceDto } from './dto/create-device.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Device } from './schemas/device.schema';
 import { Model } from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
 import { Configulation } from './schemas/configulation.schema';
+import { ConfigulationDto } from './dto/device.dto';
 // import { UpdateDeviceDto } from './dto/update-device.dto';
 
 @Injectable()

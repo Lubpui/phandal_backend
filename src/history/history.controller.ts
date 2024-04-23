@@ -7,9 +7,12 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class HistoryController {
   constructor(private readonly historyService: HistoryService) {}
 
-  @Post('/create')
-  create(@Body() createHistoryDto: CreateHistoryDto) {
-    return this.historyService.createHistory(createHistoryDto);
+  @Post('/create/:id')
+  createById(
+    @Param('id') id: string,
+    @Body() createHistoryDto: CreateHistoryDto,
+  ) {
+    return this.historyService.createHistory(id, createHistoryDto);
   }
 
   @UseGuards(JwtAuthGuard)

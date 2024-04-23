@@ -17,7 +17,7 @@ import { TeamModule } from './team/team.module';
     }),
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get('DB_URL'),
+        uri: configService.get('DB_LOCAL_URL'),
       }),
       inject: [ConfigService],
     }),

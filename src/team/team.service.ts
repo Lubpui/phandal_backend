@@ -16,7 +16,6 @@ export class TeamService {
 
   async createTeam({ userId, score, ...createTeamDto }: CreateTeamDto) {
     const findUser = await this.userModel.findById(userId);
-
     if (!findUser) throw new HttpException('User not found', 404);
 
     const newScore = new this.scoreModel<ScoreDto>(score);

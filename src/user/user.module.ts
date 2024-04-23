@@ -7,7 +7,6 @@ import {
   SummaryScore,
   SummaryScoreSchema,
 } from './schemas/summaryScore.schema';
-// import { Device, DeviceSchema } from 'src/devices/schemas/device.schema';
 
 @Module({
   imports: [

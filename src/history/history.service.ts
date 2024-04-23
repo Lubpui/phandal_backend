@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { TeamService } from 'src/team/team.service';
 import { User } from 'src/user/schemas/user.schema';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class HistoryService {
@@ -12,17 +13,19 @@ export class HistoryService {
     @InjectModel(History.name) private historyModel: Model<History>,
     @InjectModel(User.name) private userModel: Model<User>,
     private teamService: TeamService,
+    private userService: UserService,
   ) {}
 
   async createHistory(
+    userId: string,
     createHistoryDto: CreateHistoryDto,
   ): Promise<HistoryDocument> {
     const redTeam = await this.teamService.createTeam(createHistoryDto.redTeam);
     const blueTeam = await this.teamService.createTeam(
       createHistoryDto.blueTeam,
     );
-
     const history = new this.historyModel({ redTeam, blueTeam });
+    await this.userService.updateUserSummaryScore(userId, createHistoryDto);
     return history.save();
   }
 

@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
-import { RegisterDto, SummaryScoreDto } from './dto/register.dto';
+import { RegisterDto } from './dto/register.dto';
 import { SummaryScore } from './schemas/summaryScore.schema';
+import { SummaryScoreDto } from './dto/user.dto';
+import { CreateHistoryDto } from 'src/history/dto/create-history.dto';
 
 @Injectable()
 export class UserService {
@@ -59,5 +61,40 @@ export class UserService {
       })
       .populate('summaryScore');
     return users;
+  }
+
+  async updateUserSummaryScore(userId: string, history: CreateHistoryDto) {
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new HttpException('User not found', 404);
+
+    const summaryScore = await this.summaryScoreModel.findById(
+      user.summaryScore,
+    );
+    if (!summaryScore) throw new HttpException('summaryScore not found', 404);
+
+    const team =
+      (history.redTeam.userId === userId && history.redTeam) ||
+      (history.blueTeam.userId === userId && history.blueTeam);
+
+    const { score, competitionResult } = team;
+    const { killed, death, short } = score;
+
+    const newSummaryScore: SummaryScoreDto = {
+      killed: summaryScore.killed + killed,
+      death: summaryScore.death + death,
+      short: summaryScore.short + short,
+      winCount:
+        competitionResult === 'win'
+          ? summaryScore.winCount + 1
+          : summaryScore.winCount,
+      loseCount:
+        competitionResult === 'lose'
+          ? summaryScore.winCount + 1
+          : summaryScore.winCount,
+    };
+
+    const updateSummaryScore = await summaryScore.updateOne(newSummaryScore);
+
+    console.log(updateSummaryScore);
   }
 }

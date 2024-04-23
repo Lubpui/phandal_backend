@@ -1,10 +1,4 @@
-export class SummaryScoreDto {
-  readonly killed: number;
-  readonly death: number;
-  readonly short: number;
-  readonly winCount: number;
-  readonly loseCount: number;
-}
+import { SummaryScoreDto } from './user.dto';
 
 export class RegisterDto {
   readonly username: string;

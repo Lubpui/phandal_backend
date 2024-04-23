@@ -1,8 +1,4 @@
-export class ConfigulationDto {
-  readonly lightColor: string;
-  readonly recoil: number;
-  readonly mode: string;
-}
+import { ConfigulationDto } from './device.dto';
 
 export class CreateDeviceDto {
   readonly name: string;
