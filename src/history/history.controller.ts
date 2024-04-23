@@ -1,6 +1,7 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
 import { HistoryService } from './history.service';
 import { CreateHistoryDto } from './dto/create-history.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('history')
 export class HistoryController {
@@ -11,6 +12,7 @@ export class HistoryController {
     return this.historyService.createHistory(createHistoryDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   find(@Param('id') id: string) {
     return this.historyService.findHistoryById(id);
