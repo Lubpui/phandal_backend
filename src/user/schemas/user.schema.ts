@@ -18,6 +18,9 @@ export class User {
   birthdate: string;
 
   @Prop()
+  image: string;
+
+  @Prop()
   password: string;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Device' }] })

@@ -13,6 +13,7 @@ export class UserDto {
   readonly username: string;
   readonly email: string;
   readonly birthdate: string;
+  readonly image: string;
   readonly password: string;
   readonly devices: DeviceDto[];
   readonly summaryScore: SummaryScoreDto;

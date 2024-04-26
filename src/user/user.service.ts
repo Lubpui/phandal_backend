@@ -27,6 +27,7 @@ export class UserService {
 
     const newUser = new this.userModel({
       summaryScore: saveSummaryScore.id,
+      image: '',
       ...registerDto,
     });
 
@@ -96,5 +97,13 @@ export class UserService {
     const updateSummaryScore = await summaryScore.updateOne(newSummaryScore);
 
     return updateSummaryScore;
+  }
+
+  async updateUserProfile(userId: string, image: Express.Multer.File) {
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new HttpException(`User not found`, 404);
+
+    await user.updateOne({ image: `${process.env.BASE_URL}/profile.png` });
+    return image;
   }
 }
