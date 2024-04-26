@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { HistoryModule } from './history/history.module';
 import { DevicesModule } from './devices/devices.module';
 import { TeamModule } from './team/team.module';
+import { RoomModule } from './room/room.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { TeamModule } from './team/team.module';
     HistoryModule,
     DevicesModule,
     TeamModule,
+    RoomModule,
   ],
   controllers: [AppController],
   providers: [AppService],

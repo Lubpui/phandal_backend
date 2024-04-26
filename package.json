@@ -28,6 +28,8 @@
     "@nestjs/mongoose": "^10.0.4",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-socket.io": "^10.3.8",
+    "@nestjs/websockets": "^10.3.8",
     "bcrypt": "^5.1.1",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.1",
@@ -36,7 +38,8 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "socket.io": "^4.7.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
