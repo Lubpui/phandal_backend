@@ -8,4 +8,9 @@ export class RoomService {
     console.log(roomDto);
     server.emit('onMessage', { msg: 'New Message', content: roomDto });
   }
+
+  createRoom(roomDto: RoomDto, server: Server) {
+    console.log(roomDto);
+    server.emit('onMessage', { msg: 'New Message', content: roomDto });
+  }
 }

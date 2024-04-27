@@ -25,4 +25,9 @@ export class RoomGateway implements OnModuleInit {
   onNewMessage(@MessageBody() roomDto: RoomDto) {
     return this.roomService.onNewMessage(roomDto, this.server);
   }
+
+  @SubscribeMessage('createRoom')
+  createRoom(@MessageBody() roomDto: RoomDto) {
+    return this.roomService.onNewMessage(roomDto, this.server);
+  }
 }
