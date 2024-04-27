@@ -55,4 +55,24 @@ export class UserController {
 
     return this.userService.updateUserProfile(userId, image);
   }
+
+  @Post('/:id/upload/base/image')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename(req, file, callback) {
+          callback(null, `profile.png`);
+        },
+      }),
+    }),
+  )
+  async uploadBaseImage(
+    @Param('id') userId: string,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    if (!image) throw new HttpException('Image not found', 404);
+
+    return `uploaded ${image.filename} to base image`;
+  }
 }
