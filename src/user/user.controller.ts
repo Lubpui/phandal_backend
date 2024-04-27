@@ -67,10 +67,7 @@ export class UserController {
       }),
     }),
   )
-  async uploadBaseImage(
-    @Param('id') userId: string,
-    @UploadedFile() image: Express.Multer.File,
-  ) {
+  async uploadBaseImage(@UploadedFile() image: Express.Multer.File) {
     if (!image) throw new HttpException('Image not found', 404);
 
     return `uploaded ${image.filename} to base image`;
