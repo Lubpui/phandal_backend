@@ -42,7 +42,7 @@ export class UserController {
       storage: diskStorage({
         destination: './uploads',
         filename(req, file, callback) {
-          callback(null, `profile.png`);
+          callback(null, `${req.params.id}-profile.png`);
         },
       }),
     }),

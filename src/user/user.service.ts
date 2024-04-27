@@ -16,6 +16,7 @@ export class UserService {
   ) {}
 
   async createUser(registerDto: RegisterDto): Promise<User> {
+    // const { method, url, statusCode, statusMessage } = this.request;
     const newSummaryScore = new this.summaryScoreModel<SummaryScoreDto>({
       killed: 0,
       death: 0,
@@ -30,6 +31,8 @@ export class UserService {
       image: '',
       ...registerDto,
     });
+
+    // this.logger.log(`${method} ${url} ${statusCode} ${statusMessage}`);
 
     return newUser.save();
   }
@@ -103,7 +106,9 @@ export class UserService {
     const user = await this.userModel.findById(userId);
     if (!user) throw new HttpException(`User not found`, 404);
 
-    await user.updateOne({ image: `${process.env.BASE_URL}/profile.png` });
+    await user.updateOne({
+      image: `${process.env.BASE_URL}/profile.png`,
+    });
     return image;
   }
 }
