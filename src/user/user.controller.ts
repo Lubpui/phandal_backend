@@ -35,7 +35,7 @@ export class UserController {
     return this.userService.findUserById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post('/:id/upload/image')
   @UseInterceptors(
     FileInterceptor('image', {
