@@ -107,7 +107,7 @@ export class UserService {
     if (!user) throw new HttpException(`User not found`, 404);
 
     await user.updateOne({
-      image: `${process.env.BASE_URL}/profile.png`,
+      image: `${process.env.BASE_URL}/${userId}-profile.png`,
     });
     return image;
   }
