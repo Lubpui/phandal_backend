@@ -40,7 +40,7 @@ export class DevicesService {
       },
     });
 
-    return saveDevice;
+    return saveDevice.populate('configurations');
   }
 
   async updateDeviceConfiguration(
