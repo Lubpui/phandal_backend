@@ -23,7 +23,6 @@ export class DevicesService {
 
     const newConfiguration = new this.configurationModel<ConfigurationDto>({
       lightColor: 'red',
-      recoil: 1,
       mode: 'semi',
     });
     const saveConfiguration = await newConfiguration.save();

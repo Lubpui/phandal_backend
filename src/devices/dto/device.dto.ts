@@ -1,6 +1,5 @@
 export class ConfigurationDto {
   readonly lightColor: string;
-  readonly recoil: number;
   readonly mode: string;
 }
 
