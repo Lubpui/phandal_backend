@@ -9,9 +9,6 @@ export class Configuration {
   lightColor: string;
 
   @Prop({ required: true })
-  recoil: number;
-
-  @Prop({ required: true })
   mode: string;
 }
 
