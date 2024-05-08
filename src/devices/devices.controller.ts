@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { DevicesService } from './devices.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { ConfigurationDto } from './dto/device.dto';
+import { DeleteDeviceDto } from './dto/delete-device.dto';
 
 @Controller('device')
 export class DevicesController {
@@ -21,5 +22,10 @@ export class DevicesController {
       id,
       deviceConfiguration,
     );
+  }
+
+  @Delete('/delete')
+  delete(@Body() deleteDeviceDto: DeleteDeviceDto) {
+    return this.devicesService.deleteDevice(deleteDeviceDto);
   }
 }

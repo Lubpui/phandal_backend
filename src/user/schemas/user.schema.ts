@@ -24,7 +24,7 @@ export class User {
   password: string;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Device' }] })
-  devices: Device[];
+  devices: Device[] | string[];
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

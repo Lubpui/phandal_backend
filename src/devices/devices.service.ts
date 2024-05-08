@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
 import { Configuration } from './schemas/configuration.schema';
 import { ConfigurationDto } from './dto/device.dto';
+import { DeleteDeviceDto } from './dto/delete-device.dto';
 
 @Injectable()
 export class DevicesService {
@@ -46,7 +47,6 @@ export class DevicesService {
     deviceId: string,
     configuration: ConfigurationDto,
   ) {
-    console.log(configuration);
     const device = await this.deviceModel.findById(deviceId);
     if (!device) throw new HttpException('Device not found', 404);
 
@@ -61,5 +61,39 @@ export class DevicesService {
       await deviceConfiguration.updateOne(configuration);
 
     return updatedDeviceConfiguration;
+  }
+
+  async deleteDevice(deleteDeviceDto: DeleteDeviceDto) {
+    const user = await this.userModel.findById(deleteDeviceDto.userId);
+    if (!user) throw new HttpException('User not found', 404);
+
+    const deviceId = deleteDeviceDto.deviceId;
+
+    const device = await this.deviceModel.findById(deviceId);
+    if (!device) throw new HttpException('Device not found', 404);
+
+    const deviceConfiguration = await this.configurationModel.findById(
+      device.configurations,
+    );
+    if (!deviceConfiguration)
+      throw new HttpException('Device Configuration not found', 404);
+
+    const newUserDevice = user.devices.filter((item) => item != deviceId);
+    const newUser = {
+      _id: user.id,
+      username: user.username,
+      email: user.email,
+      birthdate: user.birthdate,
+      image: user.image,
+      password: user.password,
+      devices: newUserDevice,
+      summaryScore: user.summaryScore,
+    };
+
+    const deleteDevice = await device.deleteOne();
+    const deleteDeviceConfiguration = await deviceConfiguration.deleteOne();
+    const deleteUserDevice = await user.updateOne(newUser);
+
+    return { deleteDevice, deleteDeviceConfiguration, deleteUserDevice };
   }
 }
