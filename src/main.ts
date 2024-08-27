@@ -4,7 +4,9 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as path from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    cors: true,
+  });
   // app.useWebSocketAdapter()
   app.enableCors();
   app.useStaticAssets(path.join(__dirname, '../uploads'));
