@@ -9,12 +9,14 @@ import {
   UploadedFile,
   HttpException,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { UserDto } from './dto/user.dto';
 
 @Controller('user')
 export class UserController {
@@ -23,6 +25,11 @@ export class UserController {
   @Post('/register')
   create(@Body() registerDto: RegisterDto) {
     return this.userService.createUser(registerDto);
+  }
+
+  @Put('/:userId')
+  updateUser(@Param('userId') userId: string, @Body() userRequest: UserDto) {
+    return this.userService.updateUser(userId, userRequest);
   }
 
   @UseGuards(JwtAuthGuard)

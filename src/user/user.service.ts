@@ -4,7 +4,7 @@ import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { RegisterDto } from './dto/register.dto';
 import { SummaryScore } from './schemas/summaryScore.schema';
-import { SummaryScoreDto } from './dto/user.dto';
+import { SummaryScoreDto, UserDto } from './dto/user.dto';
 import { CreateHistoryDto } from 'src/history/dto/create-history.dto';
 import { Device, DeviceDocument } from 'src/devices/schemas/device.schema';
 import {
@@ -41,9 +41,19 @@ export class UserService {
       ...registerDto,
     });
 
-    // this.logger.log(`${method} ${url} ${statusCode} ${statusMessage}`);
-
     return newUser.save();
+  }
+
+  async updateUser(userId: string, userRequest: UserDto): Promise<User> {
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      { _id: userId },
+      userRequest,
+    );
+
+    if (updatedUser) {
+      throw new NotFoundException('User not found');
+    }
+    return updatedUser;
   }
 
   async findUserByEmail(email: string): Promise<UserDocument> {

@@ -23,6 +23,15 @@ export class User {
   @Prop()
   password: string;
 
+  @Prop()
+  fname: string;
+
+  @Prop()
+  lname: string;
+
+  @Prop()
+  code: number;
+
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Device' }] })
   devices: Device[] | string[];
 

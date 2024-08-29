@@ -10,6 +10,9 @@ export class SummaryScoreDto {
 
 export class UserDto {
   readonly _id: string;
+  readonly fname: string;
+  readonly lname: string;
+  readonly code: number;
   readonly username: string;
   readonly email: string;
   readonly birthdate: string;
