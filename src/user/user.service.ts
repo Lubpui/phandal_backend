@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
@@ -6,11 +6,20 @@ import { RegisterDto } from './dto/register.dto';
 import { SummaryScore } from './schemas/summaryScore.schema';
 import { SummaryScoreDto } from './dto/user.dto';
 import { CreateHistoryDto } from 'src/history/dto/create-history.dto';
+import { Device, DeviceDocument } from 'src/devices/schemas/device.schema';
+import {
+  Configuration,
+  ConfigurationDecument,
+} from 'src/devices/schemas/configuration.schema';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Configuration.name)
+    private readonly configurationModel: Model<ConfigurationDecument>,
+    @InjectModel(Device.name)
+    private readonly deviceModel: Model<DeviceDocument>,
     @InjectModel(SummaryScore.name)
     private readonly summaryScoreModel: Model<SummaryScore>,
   ) {}
@@ -58,7 +67,7 @@ export class UserService {
 
   async findAllUsers(): Promise<UserDocument[]> {
     const users = await this.userModel
-      .find()
+      .find({}, { password: 0 })
       .populate({
         path: 'devices',
         populate: { path: 'configurations' },
@@ -110,5 +119,25 @@ export class UserService {
       image: `${process.env.BASE_URL}/${userId}-profile.png`,
     });
     return image;
+  }
+
+  async deleteUserById(userId: string) {
+    const user = await this.userModel
+      .findByIdAndDelete(userId, { password: 0 })
+      .populate('devices');
+    if (!user) throw new NotFoundException(`User not found`);
+
+    const deviceIds = user.devices.map((device) => device._id);
+
+    const configurationIds = user.devices.map(
+      (device) => device.configurations,
+    );
+
+    await this.summaryScoreModel.deleteOne({ _id: user.summaryScore });
+    await this.deviceModel.deleteMany({ _id: { $in: deviceIds } });
+    await this.configurationModel.deleteMany({
+      _id: { $in: configurationIds },
+    });
+    return user;
   }
 }

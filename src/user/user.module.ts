@@ -7,6 +7,11 @@ import {
   SummaryScore,
   SummaryScoreSchema,
 } from './schemas/summaryScore.schema';
+import { Device, DeviceSchema } from 'src/devices/schemas/device.schema';
+import {
+  Configuration,
+  ConfigurationSchema,
+} from 'src/devices/schemas/configuration.schema';
 // import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
@@ -14,6 +19,8 @@ import {
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: SummaryScore.name, schema: SummaryScoreSchema },
+      { name: Device.name, schema: DeviceSchema },
+      { name: Configuration.name, schema: ConfigurationSchema },
     ]),
   ],
   controllers: [UserController],

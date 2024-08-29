@@ -8,6 +8,7 @@ import {
   UseInterceptors,
   UploadedFile,
   HttpException,
+  Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterDto } from './dto/register.dto';
@@ -71,5 +72,11 @@ export class UserController {
     if (!image) throw new HttpException('Image not found', 404);
 
     return `uploaded ${image.filename} to base image`;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:userId')
+  async deleteUserById(@Param('userId') userId: string) {
+    return this.userService.deleteUserById(userId);
   }
 }
