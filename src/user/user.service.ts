@@ -50,7 +50,7 @@ export class UserService {
       userRequest,
     );
 
-    if (updatedUser) {
+    if (!updatedUser) {
       throw new NotFoundException('User not found');
     }
     return updatedUser;
