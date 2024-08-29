@@ -27,6 +27,7 @@ export class UserController {
     return this.userService.createUser(registerDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('/:userId')
   updateUser(@Param('userId') userId: string, @Body() userRequest: UserDto) {
     return this.userService.updateUser(userId, userRequest);
