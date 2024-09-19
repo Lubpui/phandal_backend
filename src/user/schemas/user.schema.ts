@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { Device } from 'src/devices/schemas/device.schema';
 import { SummaryScore } from './summaryScore.schema';
@@ -40,6 +40,9 @@ export class User {
     ref: 'SummaryScore',
   })
   summaryScore: SummaryScore;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Games' }] })
+  games: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

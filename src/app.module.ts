@@ -9,6 +9,7 @@ import { HistoryModule } from './history/history.module';
 import { DevicesModule } from './devices/devices.module';
 import { TeamModule } from './team/team.module';
 import { RoomModule } from './room/room.module';
+import { GamesModule } from './games/games.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RoomModule } from './room/room.module';
     DevicesModule,
     TeamModule,
     RoomModule,
+    GamesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
