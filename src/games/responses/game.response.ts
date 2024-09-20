@@ -15,7 +15,7 @@ export class GameResponse {
   price: number;
 
   @ApiProperty()
-  Expose;
+  @Expose()
   image: string;
 
   @ApiProperty()
